@@ -1,27 +1,19 @@
-# --Begin-- Readme text from the AWS project init
-# Welcome to your CDK TypeScript project
 
-This is a blank project for CDK development with TypeScript.
+#  AWS CDK Fullstack Base
+## TypeScript AWS CDK Full-Stack Base Environment:  
+## Objective: 
+### The aim of this project is to set up a local AWS environment using AWS CDK, AWS SDK and MiniStacks ( https://ministack.org/ ). MiniStacks is docker that emulates an AWS cloud enviroment.   This repository will serve as the foundational blueprint for future projects, including upcoming full-stack demonstrations.   If interested, I can setup the same project in both Python and C++.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
-## Useful commands
 
-* `npm run build`   type-check the project
-* `npm run watch`   watch for changes and type-check
-* `npm run test`    perform the jest unit tests
-* `npx cdk deploy`  deploy this stack to your default AWS account/region
-* `npx cdk diff`    compare deployed stack with current state
-* `npx cdk synth`   emits the synthesized CloudFormation template
-
-# --END-- Readme text from the AWS project init
-
-#  ** Project specifics to deploy and test **
-## TypeScript AWS CDK Full-Stack Base Environment
 
 This repository provides a verified boilerplate configuration to deploy a standard serverless full-stack baseline locally using **TypeScript**, **AWS CDK**, and **MiniStack / LocalStack**. 
 
 The infrastructure maps out an **API Gateway REST API**, an **inline Node.js 20 Backend Lambda**, a **DynamoDB Table** (NoSQL), and an **S3 Assets Bucket**.
+
+**Jody H. - JLatech@pm.me**
+
+# Setup, Deploy and Test:
 
 ##  Architecture Components
 - **API Gateway Entrypoint:** Proxies incoming requests directly down to your serverless code layer.
