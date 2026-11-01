@@ -198,3 +198,17 @@ npx --package=@localstack/lstk lstk aws dynamodb scan \
   ```bash
   docker logs -f clever_galileo
   ```
+
+  **Restart the ministack docker:**
+  ```bash
+  docker restart clever_galileo
+  ```
+  Note:   docker name may be different than clever_galileo
+
+  **Get more info on running dockers:**
+  ```bash
+  docker ps
+  ```
+  
+
+
