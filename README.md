@@ -28,29 +28,37 @@ The infrastructure maps out an **API Gateway REST API**, an **inline Node.js 20 
 Ensure you have **Docker** and the **AWS CLI** binary installed on your local machine before starting.
 
 1. **Install the Local Infrastructure Wrapper Platform Globally:**
+
+   **Bash:**
    ```bash
    npm install -g aws-cdk-local
    ```
 
 2. **Initialize Local Mock AWS Profiles:**
-   MiniStack wrapper execution commands expect a profile structure named `miniStacks`. Run this command to generate your mock system profiles instantly:
-   ```bash
-   Bash
-
+   MiniStack wrapper execution commands expect a profile structure named `miniStacks`. Run these commands to generate your mock system profiles instantly:
+   
+  **Bash:**
+  ```bash
    mkdir -p ~/.aws
-   cat <<EOF >> ~/.aws/credentials
+   ```
+   ```bash
+cat <<EOF >> ~/.aws/credentials
 
 [miniStacks]
 aws_access_key_id = mock
 aws_secret_access_key = mock
 EOF
+```
 
-   cat <<EOF >> ~/.aws/config
+```bash
+cat <<EOF >> ~/.aws/config
 
 [profile miniStacks]
 region = us-east-1
 output = json
 EOF
+```
+
 
 
 ---
@@ -59,17 +67,17 @@ EOF
 
 1. **Bootstrap the MiniStack Environment:**
    Prepares the internal container storage state so it can accept custom CloudFormation stack payloads.
-   ```bash 
-   Bash
 
+   **Bash:**
+   ```bash    
    cdklocal bootstrap
    ```
 
 2. **Deploy the Infrastructure Blueprint:**
    Compiles your TypeScript layouts and spins up the serverless layers inside your local Docker setup instantly.
-   ```bash
-   Bash
 
+   **Bash:**
+   ```bash
    cdklocal deploy --require-approval never
    ```
 
@@ -90,9 +98,8 @@ Because these resources run inside a local docker mapping engine, perform these 
 ### Test 1: Verify the Live API Gateway & Lambda Handler
 Standard tools like `curl` cannot look up real `amazonaws.com` URLs locally. Route the request through `localhost:4566` using your unique generated REST API hash identifier (`4bc1a91d`):
 
+**Bash:**
 ```bash
-Bash
-
 curl http://localhost:4566/restapis/4bc1a91d/prod/_user_request_
 ```
 - **Expected Success Response:** `{"message":"Hello from the full-stack backend!"}`
@@ -100,9 +107,8 @@ curl http://localhost:4566/restapis/4bc1a91d/prod/_user_request_
 ### Test 2: Write Data Test (DynamoDB Ingestion)
 Verify the NoSQL database storage layer can successfully ingest and fetch record payloads using your generated table name output string:
 
+**Bash:**
 ```bash
-Bash
-
 npx --package=@localstack/lstk lstk aws dynamodb put-item \
   --table-name CdkFullstackBaseStack-FullStackDataTable2FBACE6A-ABEBF67C9998E \
   --item '{"pk": {"S": "USER#100"}, "sk": {"S": "PROFILE"}, "name": {"S": "Clever Galileo"}, "role": {"S": "Developer"}}'
@@ -112,9 +118,8 @@ npx --package=@localstack/lstk lstk aws dynamodb put-item \
 ### Test 3: Read Data Test (DynamoDB Extraction)
 Pull your record back out of the database engine to verify indexing, partitions, and storage durability function correctly:
 
+**Bash:**
 ```bash
-Bash
-
 npx --package=@localstack/lstk lstk aws dynamodb get-item \
   --table-name CdkFullstackBaseStack-FullStackDataTable2FBACE6A-ABEBF67C9998E \
   --key '{"pk": {"S": "USER#100"}, "sk": {"S": "PROFILE"}}'
@@ -122,9 +127,9 @@ npx --package=@localstack/lstk lstk aws dynamodb get-item \
 
 ### Test 4: Table Scan Read Test (Database Survey)
 To list and review all items currently active inside the local table environment:
-```bash
-Bash
 
+**Bash:**
+```bash
 npx --package=@localstack/lstk lstk aws dynamodb scan \
   --table-name CdkFullstackBaseStack-FullStackDataTable2FBACE6A-ABEBF67C9998E
 ```
@@ -135,8 +140,8 @@ npx --package=@localstack/lstk lstk aws dynamodb scan \
 
 - **Container Reset State:** If you restart your local docker container, the emulated parameter state will clear out. If you receive a `ParameterNotFound` error, simply re-run `cdklocal bootstrap` to restore the base tables.
 - **View Container Logs Live:** If a deployment resource feels unresponsive, open an independent terminal window and watch the streaming output directly from your container:
-  ```bash
-  Bash 
   
+  **Bash:**
+  ```bash
   docker logs -f clever_galileo
   ```
