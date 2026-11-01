@@ -118,30 +118,12 @@ Standard tools like `curl` cannot look up real `amazonaws.com` URLs locally. Rou
 curl http://localhost:4566/restapis/<miniStack Id>/prod/_user_request_
 ```
 Determine miniStack Id:
-```bash
-
-- **Expected Success Response:** `{"message":"Hello from the full-stack backend!"}`
-
-### Test 2: Write Data Test (DynamoDB Ingestion)
-Verify the NoSQL database storage layer can successfully ingest and fetch record payloads using your generated table name output string:
-
-**Bash:**
-```bash
-npx --package=@localstack/lstk lstk aws dynamodb put-item \
-  --table-name CdkFullstackBaseStack-FullStackDataTable2FBACE6A-ABEBF67C9998E \
-  --item '{"pk": {"S": "USER#100"}, "sk": {"S": "PROFILE"}, "name": {"S": "Clever Galileo"}, "role": {"S": "Developer"}}'
-```
-*(Note: A blank line return means the write transaction succeeded safely.)*
-
-### Test 3: Read Data Test (DynamoDB Extraction)
-Pull your record back out of the database engine to verify indexing, partitions, and storage durability function correctly:
-
 **Bash:**
 ```bash
 aws --endpoint-url=http://localhost:4566 apigateway get-rest-apis
 ```
 **Reponse:**
-```text
+```bash
 {
     "items": [
         {
@@ -173,6 +155,24 @@ in this example id is:    "id": "668d6627",
 ```bash
 curl http://localhost:4566/restapis/668d6627/prod/_user_request_
 ```
+
+- **Expected Success Response:** `{"message":"Hello from the full-stack backend!"}`
+
+### Test 2: Write Data Test (DynamoDB Ingestion)
+Verify the NoSQL database storage layer can successfully ingest and fetch record payloads using your generated table name output string:
+
+**Bash:**
+```bash
+npx --package=@localstack/lstk lstk aws dynamodb put-item \
+  --table-name CdkFullstackBaseStack-FullStackDataTable2FBACE6A-ABEBF67C9998E \
+  --item '{"pk": {"S": "USER#100"}, "sk": {"S": "PROFILE"}, "name": {"S": "Clever Galileo"}, "role": {"S": "Developer"}}'
+```
+*(Note: A blank line return means the write transaction succeeded safely.)*
+
+### Test 3: Read Data Test (DynamoDB Extraction)
+Pull your record back out of the database engine to verify indexing, partitions, and storage durability function correctly:
+
+```bash
 npx --package=@localstack/lstk lstk aws dynamodb get-item \
   --table-name CdkFullstackBaseStack-FullStackDataTable2FBACE6A-ABEBF67C9998E \
   --key '{"pk": {"S": "USER#100"}, "sk": {"S": "PROFILE"}}'
