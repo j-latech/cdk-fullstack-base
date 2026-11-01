@@ -68,15 +68,30 @@ EOF
 1. **Bootstrap the MiniStack Environment:**
    Prepares the internal container storage state so it can accept custom CloudFormation stack payloads.
 
-   **Bash:**
-   ```bash    
-   cdklocal bootstrap
+   **Should only need to be done once:**
+   ```bash
+   export LSTK_ENDPOINT_URL=http://localhost:4566
    ```
 
-2. **Deploy the Infrastructure Blueprint:**
-   Compiles your TypeScript layouts and spins up the serverless layers inside your local Docker setup instantly.
+   **Bash: Bootstrap**
+   ```bash    
+   lstk cdk bootstrap   
+   ```
+   **Legacy command:**
+   ```bash
+    
+   cdklocal bootstrap
+   ```
+   
 
-   **Bash:**
+2. **Deploy the Infrastructure Blueprint:**
+   Compiles your TypeScript layouts and spins up the serverless layers inside your local Docker setup instantly.   
+
+   **Bash: Deploy**
+   ```bash
+   lstk cdk deploy --require-approval never
+   ```
+   **Legacy Command:**
    ```bash
    cdklocal deploy --require-approval never
    ```
@@ -100,8 +115,11 @@ Standard tools like `curl` cannot look up real `amazonaws.com` URLs locally. Rou
 
 **Bash:**
 ```bash
-curl http://localhost:4566/restapis/4bc1a91d/prod/_user_request_
+curl http://localhost:4566/restapis/<miniStack Id>/prod/_user_request_
 ```
+Determine miniStack Id:
+```bash
+
 - **Expected Success Response:** `{"message":"Hello from the full-stack backend!"}`
 
 ### Test 2: Write Data Test (DynamoDB Ingestion)
@@ -120,6 +138,41 @@ Pull your record back out of the database engine to verify indexing, partitions,
 
 **Bash:**
 ```bash
+aws --endpoint-url=http://localhost:4566 apigateway get-rest-apis
+```
+**Reponse:**
+```text
+{
+    "items": [
+        {
+            "id": "668d6627",
+            "name": "FullStackApi",
+            "description": "",
+            "createdDate": "2026-11-01T08:10:20-05:00",
+            "version": "",
+            "binaryMediaTypes": [],
+            "apiKeySource": "HEADER",
+            "endpointConfiguration": {
+                "types": [
+                    "REGIONAL"
+                ]
+            },
+            "tags": {
+                "aws:cloudformation:stack-name": "CdkFullstackBaseStack",
+                "aws:cloudformation:stack-id": "arn:aws:cloudformation:us-east-1:000000000000:stack/CdkFullstackBaseStack/3cb584d3-7eff-445d-997d-31f3d20c6c3a",
+                "aws:cloudformation:logical-id": "FullStackApi8B473062"
+            },
+            "disableExecuteApiEndpoint": false
+        }
+    ]
+}
+
+in this example id is:    "id": "668d6627",
+```
+**For this Example:**
+```bash
+curl http://localhost:4566/restapis/668d6627/prod/_user_request_
+```
 npx --package=@localstack/lstk lstk aws dynamodb get-item \
   --table-name CdkFullstackBaseStack-FullStackDataTable2FBACE6A-ABEBF67C9998E \
   --key '{"pk": {"S": "USER#100"}, "sk": {"S": "PROFILE"}}'

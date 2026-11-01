@@ -2,10 +2,10 @@
   "name": "cdk-fullstack-base",
   "version": "0.1.0",
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest",
-    "cdk": "cdk"
+   "build": "echo 'No build needed - using tsx for direct execution'",
+   "watch": "tsx watch bin/cdk-fullstack-base.ts",
+   "test": "jest",
+   "cdk": "cdk"
   },
   "devDependencies": {
     "@swc/core": "^1.15.0",
@@ -13,7 +13,7 @@
     "@types/jest": "^30",
     "@types/node": "^24.10.1",
     "jest": "^30",
-    "aws-cdk": "2.1147.0",
+    "aws-cdk-lib": "2.1147.0",
     "tsx": "^4.23.0",
     "typescript": "~7.0.2"
   },
