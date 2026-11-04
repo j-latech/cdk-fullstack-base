@@ -194,7 +194,7 @@ npx --package=@localstack/lstk lstk aws dynamodb scan \
 ```bash
 npm run test
 ```
-**Bash:  Code Coverage
+**Bash:  Code Coverage**
 ```bash
 npm run test:vitest:coverage
 ```
