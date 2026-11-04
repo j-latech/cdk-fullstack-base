@@ -11,7 +11,7 @@ This repository provides a verified boilerplate configuration to deploy a standa
 
 The infrastructure maps out an **API Gateway REST API**, an **inline Node.js 20 Backend Lambda**, a **DynamoDB Table** (NoSQL), and an **S3 Assets Bucket**.
 
-**Jody H. - JLatech@pm.me**
+**Jody H.**
 
 # Setup, Deploy and Test:
 
@@ -185,6 +185,18 @@ To list and review all items currently active inside the local table environment
 ```bash
 npx --package=@localstack/lstk lstk aws dynamodb scan \
   --table-name CdkFullstackBaseStack-FullStackDataTable2FBACE6A-ABEBF67C9998E
+```
+
+---
+## Vitest (unit tests and code coverage)
+
+**Bash: Unit tests**
+```bash
+npm run test
+```
+**Bash:  Code Coverage
+```bash
+npm run test:vitest:coverage
 ```
 
 ---

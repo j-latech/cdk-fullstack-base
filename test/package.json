@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.150.0"
+  },
+  "devDependencies": {
+    "aws-cdk": "^2.150.0",
+    "vitest": "^5.1.0"
+  },
+  "overrides": {
+    "semver": "^7.6.3",
+    "minimatch": "^11.0.1"
+  }
+}
+

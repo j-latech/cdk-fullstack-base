@@ -1,4 +1,6 @@
-import * as cdk from 'aws-cdk-lib/core';
+// Import the CDK library from the v2 package. The old `core` import is
+// deprecated and does not expose the `synth` method on a stack.
+import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 import * as s3 from 'aws-cdk-lib/aws-s3';
@@ -12,7 +14,7 @@ export class CdkFullstackBaseStack extends cdk.Stack {
 
    // 1. S3 Bucket for frontend static site or general storage
     const assetsBucket = new s3.Bucket(this, 'FullStackAssetsBucket', {
-      versioned: false,
+      versioned: false,       
       removalPolicy: cdk.RemovalPolicy.DESTROY, // Change for production
       //autoDeleteObjects: true,                  // Convenient for dev environments
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
@@ -58,3 +60,5 @@ export class CdkFullstackBaseStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'ApiUrlOutput', { value: api.url });
   }
 }
+
+
